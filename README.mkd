@@ -4,7 +4,7 @@
 
 To run demo:
 
-1. Go to ranvier folder root
+Go to ranvier folder root
 
 **npm ci**
 
@@ -16,15 +16,15 @@ To run demo:
 
 **insert "area-builder-gui-test" under bundles**
 
-2. go to bundles/area-builder-gui-test
+go to bundles/area-builder-gui-test
 
 **npm install**
 
-3. go to ranvier folder root
+go to ranvier folder root
 
 **./ranvier**
 
-4. go to ranvier/bundles/area-builder-gui-test/test_app
+go to ranvier/bundles/area-builder-gui-test/test_app
 
 **npm install**
 
