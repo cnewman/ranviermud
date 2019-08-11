@@ -6,33 +6,33 @@ To run demo:
 
 1. Go to ranvier folder root
 
-1.1 **npm ci**
+**npm ci**
 
-1.2 **npm run init**
+**npm run init**
 
-1.3 **y**
+**y**
 
-1.4 **open ranvier.json**
+**open ranvier.json**
 
-1.5 **insert "area-builder-gui-test" under bundles**
+**insert "area-builder-gui-test" under bundles**
 
 2. go to bundles/area-builder-gui-test
 
-2.1 **npm install**
+**npm install**
 
 3. go to ranvier folder root
 
-3.1 **./ranvier**
+**./ranvier**
 
 4. go to ranvier/bundles/area-builder-gui-test/test_app
 
-4.1 **npm install**
+**npm install**
 
-4.2 **npm start**
+**npm start**
 
-4.3 **select area from menu**
+**select area from menu**
 
-4.4 **move squares like madperson**
+**move squares like madperson**
 
 
 
