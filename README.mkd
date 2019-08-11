@@ -32,6 +32,8 @@ go to ranvier/bundles/area-builder-gui-test/test_app
 
 **select area from menu**
 
+**navigate in browser (tested in firefox) to localhost:3000/areas**
+
 **move squares like madperson**
 
 
