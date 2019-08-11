@@ -8,100 +8,85 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      apiResponse: "",
+      ranvierAPIResponse: "",
       selectValue: ""
     };
   }
-  GenerateAreaGraph(apiResponse, selectedArea) {
-    //console.log(apiResponse);
+ /*
+  * Take Area data from Ranvier API response and make the graph using react-grid-layout API
+  * This function maps over the API response object from Ranvier and checks to figure out which rooms
+  * are part of the currently selected (via dropdown) area and then create a graph node for each.
+  */
+  GenerateAreaGraph(ranvierAPIResponse, selectedArea) {
     return (
-      Object.keys(apiResponse)
-        .filter(key => apiResponse[key].name.valueOf() === selectedArea.valueOf())
+      Object.keys(ranvierAPIResponse)
+        .filter(key => ranvierAPIResponse[key].name.valueOf() === selectedArea.valueOf())
         .map(function (key) {
-          console.log(apiResponse[key])
-          return (apiResponse[key].roomList.map((room, index) => {
+          console.log(ranvierAPIResponse[key])
+          return (ranvierAPIResponse[key].roomList.map((room, index) => {
             console.log(index)
             return (
-              <div style={{ background: "#000FFF" }} key={index} data-grid={{x: index%6, y:Math.floor((index%6)/6)+2, w:2, h: 2, i:"hi"}}>{room.title}</div>
+              <div style={{ background: "#000FFF" }} key={index} data-grid={{x: (index*2)%6, y:index*2, w:2, h: 2, i:"hi"}}>{room.title}</div>
             );
           }));
         })
     );
   }
-  GenerateDropdown(apiResponse) {
-    //console.log(apiResponse);
+  /*
+  * Take Area data from Ranvier API response and make a dropdown.
+  * User can select an area from the dropdown and the area's rooms will be displayed.
+  * This function maps over the API response object from Ranvier and just pulls each area name.
+  */
+  GenerateDropdown(ranvierAPIResponse) {
     return (
-      Object.keys(apiResponse)
+      Object.keys(ranvierAPIResponse)
         .map(function (key) {
-          console.log(apiResponse[key])
+          console.log(ranvierAPIResponse[key])
           return (
-            <option value={apiResponse[key].name}>{apiResponse[key].name}</option>
+            <option value={ranvierAPIResponse[key].name}>{ranvierAPIResponse[key].name}</option>
           );
         })
     );
   }
+
+  /*
+  * When a new area is selected in the dropdown, change the value so React can re-render.
+  */
+  HandleDropdownChange = (e) => {
+    this.setState({selectValue: e.target.value});
+  }
+
+  /*
+  * Once the component mounts, call Ranvier's API (only locally, currently) so that we can
+  * populate area grid and dropdown.
+  */
   callAPI() {
     fetch("http://localhost:3004/areas")
       .then(res => res.json())
       .then(res => {
-        this.setState({ apiResponse: res });
+        this.setState({ ranvierAPIResponse: res });
       })
       .catch(err => err);
-  }
-  HandleDropdownChange = (e) => {
-    this.setState({selectValue: e.target.value});
   }
   componentDidMount() {
     this.callAPI();
   }
+
+  /*
+  * Render the dropdown and area graph. The area graph uses react-grid-layout's API.
+  */
   render() {
     return(
       <div>
         <select onChange={this.HandleDropdownChange}>
           <option value=""></option>
-          {this.GenerateDropdown(this.state.apiResponse)}
+          {this.GenerateDropdown(this.state.ranvierAPIResponse)}
         </select>
         <GridLayout className="layout" cols={12} rowHeight={30} width={1200}>
-          {this.GenerateAreaGraph(this.state.apiResponse, this.state.selectValue)}
+          {this.GenerateAreaGraph(this.state.ranvierAPIResponse, this.state.selectValue)}
         </GridLayout>
       </div>
     );
   }
 }
-
-//<p className="App-intro">{this.state.apiResponse}</p>
 export default App;
-
-// import React, { Component } from "react";
-// import logo from "./logo.svg";
-// import "./App.css";
-// class App extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = { apiResponse: "" };
-//     }
-
-//     callAPI() {
-//         fetch("http://localhost:9000/limbo")
-//             .then(res => res.text())
-//             .then(res => this.setState({ apiResponse: res }))
-//             .catch(err => err);
-//     }
-
-//     componentDidMount() {
-//         this.callAPI();
-//     }
-
-//     render() {
-//         return (
-//             <div className="App">
-//                 <header className="App-header">
-//                     <img src={logo} className="App-logo" alt="logo" />
-//                     <h1 className="App-title">Welcome to React</h1>
-//                 </header>
-//                 <p className="App-intro">{this.state.apiResponse}</p>
-//             </div>
-//         );
-//     }
-// }
-//<p className="App-intro">{this.state.apiResponse}</p>
