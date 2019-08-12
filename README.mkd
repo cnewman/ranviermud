@@ -30,9 +30,9 @@ go to ranvier/bundles/area-builder-gui-test/test_app
 
 **npm start**
 
-**select area from menu**
-
 **navigate in browser (tested in firefox) to localhost:3000/areas**
+
+**select area from menu**
 
 **move squares like madperson**
 
